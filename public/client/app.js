@@ -1,4 +1,5 @@
 var message = Backbone.Model.extend({
+
   defaults:{
     username:'',
     text: '',
@@ -16,7 +17,7 @@ var messages = Backbone.Collection.extend({
 
   //ajax post to our server
   postMsg: function(){
-    
+
   }
 
   //ajax post to translate server
@@ -57,7 +58,7 @@ var messagesView = Backbone.View.extend({
     // this.collection.on('change:translate', this.render, this)
   },
   render : function(){
-    
+
   }
 
 });
