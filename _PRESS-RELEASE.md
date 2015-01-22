@@ -21,15 +21,22 @@ Once the project moves into development, the press release can be used as a touc
 
 ## Sub-Heading ##
   > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  people desiring to communicate with other people who speak different languages
+  -break language barriers
+  -learn new language
 
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  Our app speaks for you, in a language you don't.
 
 ## Problem ##
   > Describe the problem your product solves.
+  People don't speak the same language and we have the technology to change this. This app helps break those language barriers and allow for communication.
 
 ## Solution ##
   > Describe how your product elegantly solves the problem.
+  Elegant b/c i'ts eloquent. You can use our slick ui to efficiently communicate from phone/computer/tablet. Anytime. Anywhere. 
+  
 
 ## Quote from You ##
   > A quote from a spokesperson in your company.
