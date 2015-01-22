@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/HumpbackSeahorses/HumpbackSeahorses/issues"
   },
-  "homepage": "https://github.com/HumpbackSeahorses/HumpbackSeahorses"
+  "homepage": "https://github.com/HumpbackSeahorses/HumpbackSeahorses",
+  "devDependencies": {
+    "gulp": "^3.8.10"
+  }
 }
