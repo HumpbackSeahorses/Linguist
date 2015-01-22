@@ -1,17 +1,22 @@
 var port = process.env.PORT || 3000;
 
-var app = require("express")();
+var express = require("express");
+var app = express();
+
 var http = require("http").Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
 
-var indexPage = path.resolve(__dirname + '../../public/index.html');
+
+var indexPage = path.resolve(__dirname + '../../public');
 
 console.log(indexPage);
 
-app.get('/', function(req, res){
-  res.sendFile(indexPage);
-});
+app.use(express.static(indexPage));
+
+// app.get('/', function(req, res){
+//   res.sendFile(indexPage);
+// });
 
 io.on('connection', function(socket){
   console.log('a user connected!');
