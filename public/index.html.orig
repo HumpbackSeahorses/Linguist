@@ -1,5 +1,5 @@
-<!doctype html>
 <<<<<<< HEAD
+<!doctype html>
 <html>
   <head>
     <title>Socket.IO chat</title>
@@ -34,16 +34,17 @@
       });
     </script>
 =======
+g<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
   <script src="client/app.js"></script>
-  <script src="client/style.css"></script>
+  <script src="css/style.css"></script>
   
 </head>
 <body>
->>>>>>> added dist folder
+>>>>>>> more floobits issues
 
   </body>
 </html>
