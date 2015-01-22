@@ -1,11 +1,19 @@
 //Server
-var express = require("express");
-var server = express();
+var app = require("express")();
+var http = require("http").Server(app);
+var io = require('socket.io')(http);
+var path = require('path');
 
-server.use(express.static(__dirname + '../../public'));
+var indexPage = path.resolve(__dirname + '../../public/index.html');
 
-server.get('/*', function(req, res){
-  res.redirect('index.html');
+console.log(indexPage);
+
+app.get('/*', function(req, res){
+  res.sendFile(indexPage);
 });
 
-module.exports = server;
+io.on('connection', function(socket){
+  console.log('a user connected!');
+});
+
+module.exports = app;
