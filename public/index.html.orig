@@ -1,4 +1,5 @@
 <!doctype html>
+<<<<<<< HEAD
 <html>
   <head>
     <title>Socket.IO chat</title>
@@ -34,4 +35,16 @@
     </script>
 
   </body>
+=======
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="client/app.js>
+  
+</head>
+<body>
+
+</body>
+>>>>>>> created index.html
 </html>
