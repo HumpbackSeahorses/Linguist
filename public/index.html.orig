@@ -1,5 +1,5 @@
-<<<<<<< HEAD
 <!doctype html>
+<<<<<<< HEAD
 <html>
   <head>
     <title>Socket.IO chat</title>
@@ -33,18 +33,31 @@
         $('#messages').append($('<li>').text(msg));
       });
     </script>
+
+  </body>
+</html>
 =======
-g<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+  <script src='../bower_components/jquery/dist/jquery.js'></script>
+  <script src='../bower_components/underscore/underscore.js'></script>
+  <script src='../bower_components/backbone/backbone.js'></script>
   <script src="client/app.js"></script>
-  <script src="css/style.css"></script>
-  
+  <link rel='stylesheet' src="css/style.css">
+
 </head>
 <body>
->>>>>>> more floobits issues
-
-  </body>
+  <h1>Welcome to HumpbackSeahorses</h1>
+    <div>
+      <form class='message-submit'>
+        <input type='text' placeholder='Enter a message...'>
+        <input type='submit'>
+      </form>
+      <div class='chat-log'></div>
+    </div>
+</body>
 </html>
+
+>>>>>>> basic layout complete
