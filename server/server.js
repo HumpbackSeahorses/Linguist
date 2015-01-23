@@ -34,16 +34,16 @@ io.on('connection', function(socket){
   socket.on('leave room', function(room){
     // console.log(socket.adapter.rooms);
     socket.leave(room);
-    // console.log('leaving room ->', room);
-    // console.log('elvis has left the building!');
-    // console.log(socket.adapter.rooms);
+    console.log('leaving room ->', room);
+    console.log('elvis has left the building!');
+    console.log(socket.adapter.rooms);
   });
 
   socket.on('join room', function(room){
     // console.log(socket.adapter.rooms);
     socket.join(room);
-    // console.log('enter room ->', room);
-    // console.log(socket.adapter.rooms);
+    console.log('enter room ->', room);
+    console.log(socket.adapter.rooms);
   });
 
 });

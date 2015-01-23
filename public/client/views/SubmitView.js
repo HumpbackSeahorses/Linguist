@@ -5,6 +5,10 @@ var SubmitView = Backbone.View.extend({
     'submit' : 'handleSubmit'
   },
 
+  initialize: function(){
+    this.prevRoom = 'lobby';
+  },
+
   handleSubmit: function(){
     var message = {
       text: $('#chatInput').val(),
@@ -12,9 +16,25 @@ var SubmitView = Backbone.View.extend({
       username: $('#username').val(),
       room: $('#room').val()
     };
+
+    this.checkRoom(message);
+
+
     console.log('message si ->', message);  
     socket.emit('chat message', message);
     $('#chatInput').val('');
     return false;
+  },
+
+  checkRoom : function(msg){
+    if(msg.room !== this.prevRoom){
+      this.changeRoom(msg);
+    }
+  },
+
+  changeRoom : function(msg){
+    socket.emit('leave room', this.prevRoom);
+    this.prevRoom = msg.room;
+    socket.emit('join room', msg.room);
   }
 });
