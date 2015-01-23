@@ -11,9 +11,9 @@ var publicDir = 'public/**/*.js';
 
 //Backbone requires specific order for its dependencies
 gulp.task('scripts', function(){
-  return gulp.src(['./public/lib/jquery.js',
-                   './public/lib/underscore.js',
-                   './public/lib/backbone.js',
+  return gulp.src(['./bower_components/jquery/dist/jquery.js',
+                   './bower_components/underscore/underscore.js',
+                   './bower_components/backbone/backbone.js',
                    './public/lib/socket.io.js',
                    './public/client/app.js',
                    './public/client/**/*.js'])
