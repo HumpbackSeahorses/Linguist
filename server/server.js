@@ -9,8 +9,6 @@ var path = require('path');
 
 var indexPage = path.resolve(__dirname + '../../public');
 
-console.log(indexPage);
-
 app.use(express.static(indexPage));
 
 io.on('connection', function(socket){
@@ -32,6 +30,22 @@ io.on('connection', function(socket){
     // console.log('language: ' + msg.lang);
     // console.log('room: ' + msg.room);
   });
+
+  socket.on('leave room', function(room){
+    // console.log(socket.adapter.rooms);
+    socket.leave(room);
+    // console.log('leaving room ->', room);
+    // console.log('elvis has left the building!');
+    // console.log(socket.adapter.rooms);
+  });
+
+  socket.on('join room', function(room){
+    // console.log(socket.adapter.rooms);
+    socket.join(room);
+    // console.log('enter room ->', room);
+    // console.log(socket.adapter.rooms);
+  });
+
 });
 
 http.listen(port, function(){
