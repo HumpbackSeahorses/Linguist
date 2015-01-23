@@ -20,7 +20,13 @@
     <script src="/lib/socket.io.js"></script>
     <script src="/client/app.js"></script>
     <script>
+      $('#room').change(function(){
+        socket.emit('leave room', currentRoom);
+        currentRoom = $('#room').val();
+        socket.emit('join room', currentRoom);
+      });
       var socket = io();
+      var currentRoom = 'lobby';
       $('form').submit(function(){
         var message = {
           text: $('#m').val(),
@@ -28,7 +34,7 @@
           username: $('#username').val(),
           room: $('#room').val()
         };
-        console.log('message si ->', message);
+        console.log('message si ->', message);  
         socket.emit('chat message', message);
         $('#m').val('');
         return false;
