@@ -14,7 +14,7 @@ gulp.task('scripts', function(){
   return gulp.src(['./bower_components/jquery/dist/jquery.js',
                    './bower_components/underscore/underscore.js',
                    './bower_components/backbone/backbone.js',
-                   './public/lib/socket.io.js',
+                   './node_modules/socket.io-client/socket.io.js',
                    './public/client/app.js',
                    './public/client/**/*.js'])
           .pipe(concat('scripts.js'))
