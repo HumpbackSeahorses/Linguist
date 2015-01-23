@@ -15,6 +15,7 @@ gulp.task('scripts', function(){
                    './public/lib/underscore.js',
                    './public/lib/backbone.js',
                    './public/lib/socket.io.js',
+                   './public/client/app.js',
                    './public/client/**/*.js'])
           .pipe(concat('scripts.js'))
           .pipe(rename('scripts.min.js'))
