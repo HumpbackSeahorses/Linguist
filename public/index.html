@@ -9,7 +9,10 @@
 <!--     <div class='chat-log'></div> -->
     <ul id="messages"></ul>
     <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+      <input id="room" placeholder='room' autocomplete="off" />
+      <input id="lang" placeholder='lang' autocomplete="off" />
+      <input id="username" placeholder='username' autocomplete="off" />
+      <input id="m" placeholder='message' autocomplete="off" /><button>Send</button>
     </form>
     <script src='/lib/jquery.min.js'></script>
     <script src='/lib/underscore.js'></script>
@@ -19,12 +22,19 @@
     <script>
       var socket = io();
       $('form').submit(function(){
-        socket.emit('chat message', $('#m').val());
+        var message = {
+          text: $('#m').val(),
+          lang: $('#lang').val(),
+          username: $('#username').val(),
+          room: $('#room').val()
+        };
+        console.log('message si ->', message);
+        socket.emit('chat message', message);
         $('#m').val('');
         return false;
       });
       socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
+        $('#messages').append($('<li>').text(msg.username + '@' + msg.room + ' - ' + msg.text));
       });
     </script>
   </body>
