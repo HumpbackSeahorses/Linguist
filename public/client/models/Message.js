@@ -3,7 +3,7 @@ var Message = Backbone.Model.extend({
   defaults:{
     username:'',
     text: '',
-    roomname:'',
+    room:'',
     lang: 'en'
   }
 });
