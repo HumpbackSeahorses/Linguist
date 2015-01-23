@@ -8,13 +8,34 @@
   <h1>Welcome to HumpbackSeahorses</h1>
 
     <div id="submitView">
-      <form action="">
-        <input id="chatInput" autocomplete="off" /><button>Send</button>
+    <form action="">
+      <input id="room" placeholder='room' autocomplete="off" />
+      <input id="lang" placeholder='lang' autocomplete="off" />
+      <input id="username" placeholder='username' autocomplete="off" />
+        <input id="chatInput" placeholder='message' autocomplete="off" /><button>Send</button>
       </form>
     </div>
 
     <div id="messagesView"> </div>
     <script src="/dist/scripts.min.js"></script>
+    <script>
+      var socket = io();
+      $('form').submit(function(){
+        var message = {
+          text: $('#m').val(),
+          lang: $('#lang').val(),
+          username: $('#username').val(),
+          room: $('#room').val()
+        };
+        console.log('message si ->', message);
+        socket.emit('chat message', message);
+        $('#m').val('');
+        return false;
+      });
+      socket.on('chat message', function(msg){
+        $('#messages').append($('<li>').text(msg.username + '@' + msg.room + ' - ' + msg.text));
+      });
+    </script>
   </body>
 </html>
 
