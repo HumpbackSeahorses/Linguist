@@ -7,26 +7,28 @@
   
   <h1>Welcome to HumpbackSeahorses</h1>
 <!--     <div class='chat-log'></div> -->
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+    <div id="submitView">
+      <form action="">
+        <input id="chatInput" autocomplete="off" /><button>Send</button>
+      </form>
+    </div>
     <script src='/lib/jquery.min.js'></script>
     <script src='/lib/underscore.js'></script>
     <script src='/lib/backbone.js'></script>
     <script src="/lib/socket.io.js"></script>
     <script src="/client/app.js"></script>
-    <script>
-      var socket = io();
-      $('form').submit(function(){
-        socket.emit('chat message', $('#m').val());
-        $('#m').val('');
-        return false;
-      });
-      socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
-      });
-    </script>
+    <!-- <script>
+    //   var socket = io();
+    //   $('form').submit(function(){
+    //     socket.emit('chat message', $('#m').val());
+    //     $('#m').val('');
+    //     return false;
+    //   });
+    //   socket.on('chat message', function(msg){
+    //     $('#messages').append($('<li>').text(msg));
+    //   });
+    </script> -->
+    <div id="messagesView"> </div>
   </body>
 </html>
 
