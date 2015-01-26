@@ -1,8 +1,9 @@
 //returns rendered template
 var MessageView = Backbone.View.extend({
-  template : _.template('<div class="message-display"><h4> <%- username %> </h4>\
-                          <div><%- text %></div>\
-                          <div><%- lang %> | <%- room %></div>\
+  template : _.template('<div class="message-display"> \
+                          <span> \
+                            <strong><%- username %></strong>@<%- room %> - <%- text %> \
+                          </span> \
                         </div>'
                         ),
 
@@ -36,7 +37,7 @@ var MessagesView = Backbone.View.extend({
     //message.cid is unique client-only id
     if (!this.onscreenMessages[message.cid]) {
       var messageView = new MessageView ({model : message});
-      this.$el.prepend (messageView.render());
+      this.$el.append (messageView.render());
       this.onscreenMessages[message.cid] = true;
     }
   }
