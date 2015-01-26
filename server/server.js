@@ -7,8 +7,8 @@ var http = require("http").Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
 
-var db = require('../db/db.js');
-var Rooms = require('../db/models/Room.js');
+//var db = require('../db/db.js');
+//var Rooms = require('../db/models/Room.js');
 var config = require('./config.js');
 
 var indexPage = path.resolve(__dirname + '../../public');
