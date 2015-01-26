@@ -16,11 +16,8 @@ var SubmitView = Backbone.View.extend({
       username: $('#username').val(),
       room: $('#room').val()
     };
-
     this.checkRoom(message);
-
-
-    console.log('message si ->', message);  
+    console.log('message is ->', message);
     socket.emit('chat message', message);
     $('#chatInput').val('');
     return false;

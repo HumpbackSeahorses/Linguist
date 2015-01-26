@@ -5,10 +5,12 @@ var Messages = Backbone.Collection.extend({
   //instantiate new model
   //add model to collection
   addmsg: function(msg){
-    var something = new Message({ username: msg.username, 
+    console.log(msg);
+    var something = new Message({ username: msg.username,
                                   text: msg.text, 
                                   lang: msg.lang, 
-                                  room: msg.room
+                                  room: msg.room,
+                                  translations: msg.translations
                                 });
     this.add(something);
   }
