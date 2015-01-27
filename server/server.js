@@ -12,10 +12,7 @@ var Rooms = require('../db/models/Room.js');
 var config = require('./config.js') || {};
 
 var indexPage = path.resolve(__dirname + '../../public');
-var bingtoken = process.env.TOKEN || config.accessToken;
-var accessToken = encodeURIComponent(bingtoken);
-var msTranslator = require('mstranslator');
-var async = require('async');
+
 var translator = require('./translator.js');
 
 app.use(express.static(indexPage));
@@ -50,6 +47,7 @@ io.on('connection', function(socket){
           msg.translations = results;
           console.log(msg.translations, ' results from mstranslator');
           socket.join(msg.room);
+          console.log(msg, 'msg broadcasted')
           io.to(msg.room).emit('chat message', msg);
         });
       });
@@ -59,16 +57,16 @@ io.on('connection', function(socket){
   socket.on('leave room', function(room){
     // console.log(socket.adapter.rooms);
     socket.leave(room);
-   // console.log('leaving room ->', room);
-   // console.log('elvis has left the building!');
-   // console.log(socket.adapter.rooms);
+    // console.log('leaving room ->', room);
+    // console.log('elvis has left the building!');
+    // console.log(socket.adapter.rooms);
   });
 
   socket.on('join room', function(room){
     // console.log(socket.adapter.rooms);
     socket.join(room);
-   // console.log('enter room ->', room);
-   // console.log(socket.adapter.rooms);
+    // console.log('enter room ->', room);
+    // console.log(socket.adapter.rooms);
   });
 
 });
