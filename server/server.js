@@ -35,8 +35,8 @@ io.on('connection', function(socket){
     }
 
     var client =  new msTranslator({
-      client_id:  "linguistHRR3",
-      client_secret: "ucpusUg1TmtwCwva9jOCZXTtAoqhpbNaPb0fwU3plrk="
+      client_id:  process.env.CLIENT_ID || config.client_id,
+      client_secret: process.env.CLIENT_SECRET || config.client_secret
     }, true);
 
     async.parallel([
