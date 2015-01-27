@@ -1,4 +1,5 @@
 var msTranslator = require('mstranslator');
+var config = require('./config.js')
 
 var makeTranslateQuery = function(text, fromLang, toLang){
   var params = {
@@ -8,8 +9,8 @@ var makeTranslateQuery = function(text, fromLang, toLang){
   }
   return function(callback){
     var client =  new msTranslator({
-      client_id:  "linguistHRR3",
-      client_secret: "ucpusUg1TmtwCwva9jOCZXTtAoqhpbNaPb0fwU3plrk="
+      client_id:  config.client_id,
+      client_secret: config.client_secret
     }, true);
     client.translate (params, function (err , data) {
       console.log (params.to, 'returned data');
