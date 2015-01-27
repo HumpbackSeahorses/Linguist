@@ -7,8 +7,8 @@ var http = require("http").Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
 
-//var db = require('../db/db.js');
-//var Rooms = require('../db/models/Room.js');
+var db = require('../db/db.js');
+var Rooms = require('../db/models/Room.js');
 var config = require('./config.js');
 
 var indexPage = path.resolve(__dirname + '../../public');
@@ -16,6 +16,7 @@ var bingtoken = process.env.TOKEN || config.accessToken;
 var accessToken = encodeURIComponent(bingtoken);
 var msTranslator = require('mstranslator');
 var async = require('async');
+var makeQuery = require('./translator.js');
 
 app.use(express.static(indexPage));
 
@@ -26,70 +27,38 @@ io.on('connection', function(socket){
     //console.log('user disconnected');
   });
 
-  var languages = ['es', 'en', 'it', 'tlh', 'zh-CHT'];
-
   socket.on('chat message', function(msg){
-    //actually, join it here since we emit msg in here?
-    if(msg.room === ""){
+    if(msg.room ===''){
       msg.room = 'lobby';
     }
-
-    var client =  new msTranslator({
-      client_id:  process.env.CLIENT_ID || config.client_id,
-      client_secret: process.env.CLIENT_SECRET || config.client_secret
-    }, true);
-
-    async.parallel([
-
-      function(callback){
-        client.translate ({text : msg.text , from : msg.lang , to : 'en'} , function (err , data) {
-          if(err){console.log(err)}
-          else{
-            callback (err , data);
-          }
-        });
-      },
-
-      function(callback){
-        client.translate ({text : msg.text , from : msg.lang , to : 'es'} , function (err , data) {
-          if(err){console.log(err)}
-          else{
-            callback (err , data);
-          }
-        });
-      },
-      function(callback){
-       client.translate ({text : msg.text , from : msg.lang , to : 'it'} , function (err , data) {
-          if(err){console.log(err)}
-          else{
-            callback (err , data);
-          }
-        });
-      },
-      function(callback){
-        client.translate ({text : msg.text , from : msg.lang , to : 'tlh'} , function (err , data) {
-          if(err){console.log(err)}
-          else{
-            callback (err , data);
-          }
-        });
-      },
-      function(callback){
-        client.translate ({text : msg.text , from : msg.lang , to : 'zh-CHT'} , function (err , data) {
-          if(err){console.log(err)}
-          else{
-            callback (err , data);
-          }
-        });
+    Rooms.findOne({room: msg.room}, function(err, room){
+      if (err){
+        console.log(err, ' error finding room!');
       }
-    ], function(err, results){
-      msg.translations = results;
-      // console.log(results);
-      socket.join(msg.room);
-      console.log(msg.translations);
-      // code below shows room w/users inside
-      io.to(msg.room).emit('chat message', msg);
-    });
+      if (room === null){
+        room = new Rooms({
+          room: msg.room,
+          lang: [msg.lang]
+        })
+      }
+      if(room.lang.indexOf(msg.lang) === -1){
+        room.lang.push(msg.lang);
+      }
+      var tasks = [];
+      room.save(function(err, room){
+        console.log(room.lang.length);
+        for(var i = 0; i < room.lang.length; i++){
+          var lang = room.lang[i];
+          console.log(lang);
+          tasks[i] = makeQuery(msg.text, msg.lang, room.lang[i]);
+        }
+        console.log('these are the tasks: ', tasks[0] ,tasks[1]);
+        console.log('this is the room: ', room);
+        async.parallel(tasks, function(err, results){
+          console.log(results);
+        })
+      });
+    })
   });
 
   socket.on('leave room', function(room){
