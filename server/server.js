@@ -9,14 +9,14 @@ var path = require('path');
 
 var db = require('../db/db.js');
 var Rooms = require('../db/models/Room.js');
-var config = require('./config.js');
+var config = require('./config.js') || {};
 
 var indexPage = path.resolve(__dirname + '../../public');
 var bingtoken = process.env.TOKEN || config.accessToken;
 var accessToken = encodeURIComponent(bingtoken);
 var msTranslator = require('mstranslator');
 var async = require('async');
-var makeQuery = require('./translator.js');
+var translator = require('./translator.js');
 
 app.use(express.static(indexPage));
 
@@ -44,19 +44,14 @@ io.on('connection', function(socket){
       if(room.lang.indexOf(msg.lang) === -1){
         room.lang.push(msg.lang);
       }
-      var tasks = [];
       room.save(function(err, room){
         console.log(room.lang.length);
-        for(var i = 0; i < room.lang.length; i++){
-          var lang = room.lang[i];
-          console.log(lang);
-          tasks[i] = makeQuery(msg.text, msg.lang, room.lang[i]);
-        }
-        console.log('these are the tasks: ', tasks[0] ,tasks[1]);
-        console.log('this is the room: ', room);
-        async.parallel(tasks, function(err, results){
-          console.log(results);
-        })
+        translator.translate(msg, room, function(err, results){
+          msg.translations = results;
+          console.log(msg.translations, ' results from mstranslator');
+          socket.join(msg.room);
+          io.to(msg.room).emit('chat message', msg);
+        });
       });
     })
   });
