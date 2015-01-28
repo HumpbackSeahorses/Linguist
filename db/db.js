@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
+var config = require('../server/config.js')
 
-var devPath = 'mongodb://localhost:27017/linguist';
-var dbPath = process.env.MONGODB_URI || devPath;
+var 
+var dbPath = process.env.MONGODB_URI || config.localDevPath;
 mongoose.connect(dbPath);
 
 var db = mongoose.connection;
