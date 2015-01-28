@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var config = require('../server/config.js')
+var config = require('../server/config.js') || {};
 
 var dbPath = process.env.MONGODB_URI || config.localDevPath;
 mongoose.connect(dbPath);
