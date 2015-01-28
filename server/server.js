@@ -7,104 +7,66 @@ var http = require("http").Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
 
-//var db = require('../db/db.js');
-//var Rooms = require('../db/models/Room.js');
-var config = require('./config.js');
+var db = require('../db/db.js');
+var Rooms = require('../db/models/Room.js');
+var config = require('./config.js') || {};
 
 var indexPage = path.resolve(__dirname + '../../public');
-var bingtoken = process.env.TOKEN || config.accessToken;
-var accessToken = encodeURIComponent(bingtoken);
-var msTranslator = require('mstranslator');
-var async = require('async');
+
+var translator = require('./translator.js');
 
 app.use(express.static(indexPage));
 
 io.on('connection', function(socket){
+  //automatically connect new users to lobby
   socket.join('lobby');
- //console.log('a user connected!');
+  //console.log('a user connected!');
   socket.on('disconnect', function(){
     //console.log('user disconnected');
   });
 
-  var languages = ['es', 'en', 'it', 'tlh', 'zh-CHT'];
-
   socket.on('chat message', function(msg){
-    //actually, join it here since we emit msg in here?
-    if(msg.room === ""){
+    if(msg.room ===''){
       msg.room = 'lobby';
     }
-
-    var client =  new msTranslator({
-      client_id:  process.env.CLIENT_ID || config.client_id,
-      client_secret: process.env.CLIENT_SECRET || config.client_secret
-    }, true);
-
-    async.parallel([
-
-      function(callback){
-        client.translate ({text : msg.text , from : msg.lang , to : 'en'} , function (err , data) {
-          if(err){console.log(err)}
-          else{
-            callback (err , data);
-          }
-        });
-      },
-
-      function(callback){
-        client.translate ({text : msg.text , from : msg.lang , to : 'es'} , function (err , data) {
-          if(err){console.log(err)}
-          else{
-            callback (err , data);
-          }
-        });
-      },
-      function(callback){
-       client.translate ({text : msg.text , from : msg.lang , to : 'it'} , function (err , data) {
-          if(err){console.log(err)}
-          else{
-            callback (err , data);
-          }
-        });
-      },
-      function(callback){
-        client.translate ({text : msg.text , from : msg.lang , to : 'tlh'} , function (err , data) {
-          if(err){console.log(err)}
-          else{
-            callback (err , data);
-          }
-        });
-      },
-      function(callback){
-        client.translate ({text : msg.text , from : msg.lang , to : 'zh-CHT'} , function (err , data) {
-          if(err){console.log(err)}
-          else{
-            callback (err , data);
-          }
-        });
+    Rooms.findOne({room: msg.room}, function(err, room){
+      if (err){
+        console.log(err, ' error finding room!');
       }
-    ], function(err, results){
-      msg.translations = results;
-      // console.log(results);
-      socket.join(msg.room);
-      console.log(msg.translations);
-      // code below shows room w/users inside
-      io.to(msg.room).emit('chat message', msg);
-    });
+      if (room === null){
+        room = new Rooms({
+          room: msg.room,
+          lang: [msg.lang]
+        })
+      }
+      if(room.lang.indexOf(msg.lang) === -1){
+        room.lang.push(msg.lang);
+      }
+      room.save(function(err, room){
+        console.log(room.lang.length);
+        translator.translate(msg, room, function(err, results){
+          msg.translations = results;
+          socket.join(msg.room);
+          console.log('broadcasted message: ', msg);
+          io.to(msg.room).emit('chat message', msg);
+        });
+      });
+    })
   });
 
   socket.on('leave room', function(room){
     // console.log(socket.adapter.rooms);
     socket.leave(room);
-   // console.log('leaving room ->', room);
-   // console.log('elvis has left the building!');
-   // console.log(socket.adapter.rooms);
+    // console.log('leaving room ->', room);
+    // console.log('elvis has left the building!');
+    // console.log(socket.adapter.rooms);
   });
 
   socket.on('join room', function(room){
     // console.log(socket.adapter.rooms);
     socket.join(room);
-   // console.log('enter room ->', room);
-   // console.log(socket.adapter.rooms);
+    // console.log('enter room ->', room);
+    // console.log(socket.adapter.rooms);
   });
 
 });

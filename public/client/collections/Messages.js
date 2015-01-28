@@ -15,7 +15,4 @@ var Messages = Backbone.Collection.extend({
     this.add(something);
   }
 
-  //TODO: ajax post to translate server
-  // translate: function(){}
-
 });
