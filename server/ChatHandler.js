@@ -23,7 +23,7 @@ ChatHandler.prototype.prepareMessage = function(msg, callback){
   });
 }
 
-//join room
+// accepts strings as arguments
 ChatHandler.prototype.joinRoom = function(joinRoom, lang){
   Rooms.findOne({room: joinRoom}, function(err, room){
     if(err){
@@ -51,6 +51,7 @@ ChatHandler.prototype.joinRoom = function(joinRoom, lang){
   });
 }
 
+// accepts strings as arguments
 ChatHandler.prototype.leaveRoom = function(leaveRoom, lang){
   Rooms.findOne({room: leaveRoom}, function(err, room){
     if(err){
@@ -67,9 +68,6 @@ ChatHandler.prototype.leaveRoom = function(leaveRoom, lang){
     }
     console.log('left room: ', leaveRoom);
   });
-  // console.log('leaving room ->', room);
-  // console.log('elvis has left the building!');
-  // console.log(socket.adapter.rooms);
 }
 
 module.exports = new ChatHandler();
