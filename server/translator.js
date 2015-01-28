@@ -24,8 +24,8 @@ Translator.prototype.makeTranslateQuery = function(text, fromLang, toLang){
   };
   return function(callback){
     var client =  new msTranslator({
-      client_id:  config.client_id,
-      client_secret: config.client_secret
+      client_id: process.env.CLIENT_ID || config.client_id,
+      client_secret: process.env.CLIENT_SECRET || config.client_secret
     }, true);
     client.translate (params, function (err , data) {
       console.log (params.to, 'returned data');

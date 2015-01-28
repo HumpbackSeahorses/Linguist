@@ -18,8 +18,9 @@ var translator = require('./translator.js');
 app.use(express.static(indexPage));
 
 io.on('connection', function(socket){
+  //automatically connect new users to lobby
   socket.join('lobby');
- //console.log('a user connected!');
+  //console.log('a user connected!');
   socket.on('disconnect', function(){
     //console.log('user disconnected');
   });
