@@ -46,9 +46,8 @@ io.on('connection', function(socket){
         console.log(room.lang.length);
         translator.translate(msg, room, function(err, results){
           msg.translations = results;
-          console.log(msg.translations, ' results from mstranslator');
           socket.join(msg.room);
-          console.log(msg, 'msg broadcasted')
+          console.log('broadcasted message: ', msg);
           io.to(msg.room).emit('chat message', msg);
         });
       });
