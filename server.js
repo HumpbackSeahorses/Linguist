@@ -19,7 +19,7 @@ io.on('connection', function(socket){
   chatter.joinRoom('lobby', 'en');
 
   //naive solution, custom variables to store last room
-  //and user language. used tidying rooms on disconnect
+  //and user language. used for leaving rooms on disconnect
   //if users are implemented these should probably be in that model
   socket.currentRoom = 'lobby';
   socket.userLang = 'en';
@@ -36,7 +36,7 @@ io.on('connection', function(socket){
       socket.join(msg.room);
       console.log('broadcasted message: ', msg);
       io.to(msg.room).emit('chat message', msg);
-    })
+    });
   });
 
   socket.on('leave room', function(data){
@@ -54,11 +54,6 @@ io.on('connection', function(socket){
     // console.log(socket.adapter.rooms);
     // console.log('enter room ->', room);
     // console.log(socket.adapter.rooms);
-  });
-
-  socket.on('change language', function(newLang){
-    chatter.changeLanguage(socket.userLang, newLang, socket.currentRoom);
-    socket.userLang = newLang;
   });
 
 });

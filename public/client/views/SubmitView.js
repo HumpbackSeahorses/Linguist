@@ -3,7 +3,7 @@ var SubmitView = Backbone.View.extend({
 
   events: {
     'submit' : 'handleSubmit',
-    'change #lang' : 'changeLanguage'
+    
   },
 
   initialize: function(){
@@ -22,11 +22,6 @@ var SubmitView = Backbone.View.extend({
     socket.emit('chat message', message);
     $('#chatInput').val('');
     return false;
-  },
-
-  changeLanguage: function(){
-    console.log('changing language');
-    socket.emit('change language', $('#lang').val());
   },
 
   checkRoom : function(msg){

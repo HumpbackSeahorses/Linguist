@@ -27,11 +27,9 @@ ChatHandler.prototype.prepareMessage = function(msg, callback){
 ChatHandler.prototype.joinRoom = function(joinRoom, lang){
   Rooms.findOne({room: joinRoom}, function(err, room){
     if(err){
-      console.log(err, 'error finding room!');
+      console.log(err, 'error finding room to join!');
     }
-    // this creates room if it doesn't exist,
-    // stores languages as lang obj, property = language code
-    // value = # of users connected that langauge
+    // if room doesn't exist, make new one
     if(room === null){
       var language = {};
       language[lang] = 1;
@@ -41,12 +39,12 @@ ChatHandler.prototype.joinRoom = function(joinRoom, lang){
         connections: 1
       }) 
     } else {
-      // If language exists in room, add 1 to user counter, else initiate to 1
+      // If language exists in room, add 1 to user counter
+      // else initiate new language property to 1
       room.lang[lang] = (room.lang[lang] > 0) ? room.lang[lang] + 1 : 1;
       room.markModified('lang');
       room.connections++;
     }
-    console.log('joined room: ', joinRoom);
     room.save();
   });
 };
@@ -68,20 +66,8 @@ ChatHandler.prototype.leaveRoom = function(leaveRoom, lang){
       room.markModified('lang');
       room.save();
     }
-    console.log('left room: ', leaveRoom);
   });
 };
 
-ChatHandler.prototype.changeLanguage = function(oldLang, newLang, currentRoom){
-  Rooms.findOne({room: currentRoom}, function(err, room){
-    if(err){
-      console.log('error finding room for changing language');
-    }
-    room.lang[oldLang]--;
-    room.lang[newLang] = (room.lang[newLang] > 0) ? room.lang[newLang] + 1 : 1;
-    room.markModified('lang');
-    room.save();
-  })
-};
 
 module.exports = new ChatHandler();
