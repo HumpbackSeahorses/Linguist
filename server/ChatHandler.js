@@ -23,7 +23,6 @@ ChatHandler.prototype.prepareMessage = function(msg, callback){
   });
 };
 
-ChatHandler.prototype.checkRoom = function(){}
 
 // accepts strings as arguments
 ChatHandler.prototype.joinRoom = function(joinRoom, lang){

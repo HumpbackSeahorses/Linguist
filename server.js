@@ -47,13 +47,15 @@ io.on('connection', function(socket){
   //   chatter.leaveRoom(data.leaveRoom, data.lang);
   // });
 
-  socket.on('join room', function(msg){
+  socket.on('join room', function(data){
     socket.leave(socket.currentRoom);
-    socket.currentRoom = msg.room;
+    // leaveroom is broken, appends undefined :NAN to room.lang
+    chatter.leaveRoom(socket.currentRoom, data.lang);
 
-    socket.join(msg.room);
+    socket.currentRoom = data.room;
 
-    chatter.joinRoom(msg.room, msg.lang);
+    socket.join(data.room);
+    chatter.joinRoom(data.room, data.lang);
     // console.log(socket.adapter.rooms);
     // console.log('enter room ->', room);
     // console.log(socket.adapter.rooms);
