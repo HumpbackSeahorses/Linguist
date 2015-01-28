@@ -5,6 +5,6 @@ var Message = Backbone.Model.extend({
     text: '',
     room:'',
     lang: 'en',
-    translations: []
+    translations: {}
   }
 });
