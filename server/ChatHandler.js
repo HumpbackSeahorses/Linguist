@@ -49,7 +49,7 @@ ChatHandler.prototype.joinRoom = function(joinRoom, lang){
     console.log('joined room: ', joinRoom);
     room.save();
   });
-}
+};
 
 // accepts strings as arguments
 ChatHandler.prototype.leaveRoom = function(leaveRoom, lang){
@@ -57,17 +57,31 @@ ChatHandler.prototype.leaveRoom = function(leaveRoom, lang){
     if(err){
       console.log('FATAL: error finding room to leave!');
     }
+    //subtract connection counter
     room.connections--;
     if(room.connections === 0){
       //delete room if no users left:
       room.remove();
     } else {
+      //remove language counter 
       room.lang[lang]--;
       room.markModified('lang');
       room.save();
     }
     console.log('left room: ', leaveRoom);
   });
-}
+};
+
+ChatHandler.prototype.changeLanguage = function(oldLang, newLang, currentRoom){
+  Rooms.findOne({room: currentRoom}, function(err, room){
+    if(err){
+      console.log('error finding room for changing language');
+    }
+    room.lang[oldLang]--;
+    room.lang[newLang] = (room.lang[newLang] > 0) ? room.lang[newLang] + 1 : 1;
+    room.markModified('lang');
+    room.save();
+  })
+};
 
 module.exports = new ChatHandler();

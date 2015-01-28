@@ -6,7 +6,7 @@ var http = require("http").Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
 
-var indexPage = path.resolve(__dirname + '../../public');
+var indexPage = path.resolve(__dirname + '/public');
 
 app.use(express.static(indexPage));
 
@@ -26,7 +26,8 @@ io.on('connection', function(socket){
 
   socket.on('disconnect', function(){
     //console.log('user disconnected');
-    chatter.leaveRoom(socket.currentRoom, socket.userLang)
+    console.log(socket.currentRoom, socket.userLang);
+    chatter.leaveRoom(socket.currentRoom, socket.userLang);
   });
 
   socket.on('chat message', function(msg){
@@ -55,8 +56,9 @@ io.on('connection', function(socket){
     // console.log(socket.adapter.rooms);
   });
 
-  socket.on('change language', function(data){
-
+  socket.on('change language', function(newLang){
+    chatter.changeLanguage(socket.userLang, newLang, socket.currentRoom);
+    socket.userLang = newLang;
   });
 
 });
