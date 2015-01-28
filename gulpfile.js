@@ -30,7 +30,7 @@ gulp.task('watch-public', function(){
 gulp.task('develop', function(){
   gulp.start('scripts');
   nodemon({ 
-    script: './server/server.js',
+    script: './server.js',
     env: { 'NODE_ENV': 'development' },
     ignore: ['public/dist/']
   })
