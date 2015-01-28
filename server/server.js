@@ -33,25 +33,11 @@ io.on('connection', function(socket){
       if (err){
         console.log(err, ' error finding room!');
       }
-      if (room === null){
-        var lang = {};
-        lang[msg.lang] = 1;
-        room = new Rooms({
-          room: msg.room,
-          lang: {msg.lang}
-        })
-      }
-      if(!room.lang[msg.lang]){
-        room.lang[msg.lang] = 1;
-      }
-      room.save(function(err, room){
-        console.log(room.lang.length);
-        translator.translate(msg, room, function(err, results){
-          msg.translations = results;
-          socket.join(msg.room);
-          console.log('broadcasted message: ', msg);
-          io.to(msg.room).emit('chat message', msg);
-        });
+      translator.translate(msg, room, function(err, results){
+        msg.translations = results;
+        socket.join(msg.room);
+        console.log('broadcasted message: ', msg);
+        io.to(msg.room).emit('chat message', msg);
       });
     })
   });
@@ -67,7 +53,7 @@ io.on('connection', function(socket){
   socket.on('join room', function(new_room, client_language){
     socket.join(new_room);
     // Find room in db
-    Rooms.findOne({room: room}, function(err, room){
+    Rooms.findOne({room: new_room}, function(err, room){
       if(err){
         console.log(err, 'error finding room!');
       }
@@ -76,14 +62,14 @@ io.on('connection', function(socket){
       // value = # of users connected that langauge
       if(room === null){
         var lang = {};
-        lang[msg.lang] = 1;
+        lang[client_language] = 1;
         room = new Rooms({
           room: msg.room,
           lang: lang
         }) 
       } else {
         // If language exists in room, add 1 to user counter, else initiate to 1
-        room.lang[msg.lang] = (room.lang[msg.lang]) ? room.lang[msg.lang] + 1 : 1;
+        room.lang[client_language] = (room.lang[client_language]) ? room.lang[client_language] + 1 : 1;
       }
       room.save();
     });
