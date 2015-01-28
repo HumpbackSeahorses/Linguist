@@ -30,27 +30,30 @@ io.on('connection', function(socket){
     chatter.leaveRoom(socket.currentRoom, socket.userLang);
   });
 
+  //translate and emit results using a callback on prepared messages
   socket.on('chat message', function(msg){
-    //translate and emit results with callback on prepared message
     chatter.prepareMessage(msg, function(){
+      //emit message
       socket.join(msg.room);
       console.log('broadcasted message: ', msg);
       io.to(msg.room).emit('chat message', msg);
     });
   });
 
-  socket.on('leave room', function(data){
-    // console.log(socket.adapter.rooms);
-    socket.leave(data.leaveRoom);
-    //leave room
-    chatter.leaveRoom(data.leaveRoom, data.lang);
-  });
+  // socket.on('leave room', function(data){
+  //   // console.log(socket.adapter.rooms);
+  //   socket.leave(data.leaveRoom);
+  //   //leave room
+  //   chatter.leaveRoom(data.leaveRoom, data.lang);
+  // });
 
-  socket.on('join room', function(data){
-    socket.join(data.joinRoom);
-    //join room
-    socket.currentRoom = data.joinRoom;
-    chatter.joinRoom(data.joinRoom, data.lang);
+  socket.on('join room', function(msg){
+    socket.leave(socket.currentRoom);
+    socket.currentRoom = msg.room;
+
+    socket.join(msg.room);
+
+    chatter.joinRoom(msg.room, msg.lang);
     // console.log(socket.adapter.rooms);
     // console.log('enter room ->', room);
     // console.log(socket.adapter.rooms);

@@ -6,13 +6,13 @@ var Messages = Backbone.Collection.extend({
   //add model to collection
   addmsg: function(msg){
     console.log(msg);
-    var something = new Message({ username: msg.username,
+    var message = new Message({ username: msg.username,
                                   text: msg.text, 
                                   lang: msg.lang, 
                                   room: msg.room,
                                   translations: msg.translations
                                 });
-    this.add(something);
+    this.add(message);
   }
 
 });

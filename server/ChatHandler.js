@@ -21,7 +21,9 @@ ChatHandler.prototype.prepareMessage = function(msg, callback){
       callback(msg);
     });
   });
-}
+};
+
+ChatHandler.prototype.checkRoom = function(){}
 
 // accepts strings as arguments
 ChatHandler.prototype.joinRoom = function(joinRoom, lang){
