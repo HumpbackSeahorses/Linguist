@@ -20,6 +20,30 @@ app.use(express.static(indexPage));
 io.on('connection', function(socket){
   //automatically connect new users to lobby
   socket.join('lobby');
+  // Find room in db
+  Rooms.findOne({room: 'lobby'}, function(err, room){
+    if(err){
+      console.log(err, 'error finding room!');
+    }
+    // this creates room if it doesn't exist,
+    // stores languages as lang obj, property = language code
+    // value = # of users connected that langauge
+    if(room === null){
+      room = new Rooms({
+        room: 'lobby',
+        lang: {en: 1},
+        connections: 1
+      }) 
+    } else {
+      console.log('room already exists!');
+      // If language exists in room, add 1 to user counter, else initiate to 1
+      room.lang.en = (room.lang.en === 0) ? 1 : room.lang.en + 1;
+      room.markModified('lang');
+      room.connections++;
+    }
+    console.log('joined room: ', 'lobby');
+    room.save();
+  });
   //console.log('a user connected!');
   socket.on('disconnect', function(){
     //console.log('user disconnected');
@@ -33,7 +57,7 @@ io.on('connection', function(socket){
       if (err){
         console.log(err, ' error finding room!');
       }
-      translator.translate(msg.text, room, function(err, results){
+      translator.translate(msg, room, function(err, results){
         msg.translations = results;
         socket.join(msg.room);
         console.log('broadcasted message: ', msg);
@@ -86,6 +110,7 @@ io.on('connection', function(socket){
       } else {
         // If language exists in room, add 1 to user counter, else initiate to 1
         room.lang[data.lang] = (room.lang[data.lang] > 0) ? room.lang[data.lang] + 1 : 1;
+        room.markModified('lang');
         room.connections++;
       }
       console.log('joined room: ', data.joinRoom);

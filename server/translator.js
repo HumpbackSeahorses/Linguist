@@ -12,9 +12,10 @@ Translator.prototype.translate = function(msg, room, callback){
   for(var key in room.lang){
     // console.log(room.lang[i], ' from translate function');
     if(room.lang.hasOwnProperty(key) && room.lang[key] > 0){
-      tasks[key] = this.makeTranslateQuery(msg.text, msg.lang, room.lang[key]);
+      tasks[key] = this.makeTranslateQuery(msg.text, msg.lang, key);
     }
   }
+  console.log('tasks: ', tasks);
   async.parallel(tasks, function(err, results){
     callback(err, results);
   })
