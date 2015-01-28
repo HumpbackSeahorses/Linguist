@@ -9,9 +9,11 @@ var Translator = function(){};
 // calls them in parallel, and executes callback on the results.
 Translator.prototype.translate = function(msg, room, callback){
   var tasks = {};
-  for(var i = 0; i < room.lang.length; i++){
-    console.log(room.lang[i], ' from translate function');
-    tasks[room.lang[i]] = this.makeTranslateQuery(msg.text, msg.lang, room.lang[i]);
+  for(var key in room.lang){
+    // console.log(room.lang[i], ' from translate function');
+    if(room.lang.hasOwnProperty(key) && room.lang[key] > 0){
+      tasks[key] = this.makeTranslateQuery(msg.text, msg.lang, room.lang[key]);
+    }
   }
   async.parallel(tasks, function(err, results){
     callback(err, results);

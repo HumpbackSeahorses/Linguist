@@ -30,8 +30,8 @@ var SubmitView = Backbone.View.extend({
   },
 
   changeRoom : function(msg){
-    socket.emit('leave room', {leave: this.prevRoom, lang: msg.lang);
+    socket.emit('leave room', {leaveRoom: this.prevRoom, lang: msg.lang);
     this.prevRoom = msg.room;
-    socket.emit('join room', {join: msg.room, lang: msg.lang});
+    socket.emit('join room', {joinRoom: msg.room, lang: msg.lang});
   }
 });

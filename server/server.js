@@ -33,7 +33,7 @@ io.on('connection', function(socket){
       if (err){
         console.log(err, ' error finding room!');
       }
-      translator.translate(msg, room, function(err, results){
+      translator.translate(msg.text, room, function(err, results){
         msg.translations = results;
         socket.join(msg.room);
         console.log('broadcasted message: ', msg);
@@ -42,18 +42,33 @@ io.on('connection', function(socket){
     })
   });
 
-  socket.on('leave room', function(room){
+  socket.on('leave room', function(data){
     // console.log(socket.adapter.rooms);
-    socket.leave(room);
+    socket.leave(data.leaveRoom);
+
+    Rooms.findOne({room: data.leaveRoom}, function(err, room){
+      if(err){
+        console.log('error finding room!');
+      }
+      room.lang[data.lang]--;
+      room.connections--;
+      if(room.connections === 0){
+        //delete room if no users left:
+        room.remove();
+      } else {
+        room.save();
+      }
+      console.log('left room: ', data.leaveRoom);
+    });
     // console.log('leaving room ->', room);
     // console.log('elvis has left the building!');
     // console.log(socket.adapter.rooms);
   });
 
-  socket.on('join room', function(new_room, client_language){
-    socket.join(new_room);
+  socket.on('join room', function(data){
+    socket.join(data.joinRoom);
     // Find room in db
-    Rooms.findOne({room: new_room}, function(err, room){
+    Rooms.findOne({room: data.joinRoom}, function(err, room){
       if(err){
         console.log(err, 'error finding room!');
       }
@@ -62,15 +77,18 @@ io.on('connection', function(socket){
       // value = # of users connected that langauge
       if(room === null){
         var lang = {};
-        lang[client_language] = 1;
+        lang[data.lang] = 1;
         room = new Rooms({
-          room: msg.room,
-          lang: lang
+          room: data.joinRoom,
+          lang: lang,
+          connections: 1
         }) 
       } else {
         // If language exists in room, add 1 to user counter, else initiate to 1
-        room.lang[client_language] = (room.lang[client_language]) ? room.lang[client_language] + 1 : 1;
+        room.lang[data.lang] = (room.lang[data.lang] > 0) ? room.lang[data.lang] + 1 : 1;
+        room.connections++;
       }
+      console.log('joined room: ', data.joinRoom);
       room.save();
     });
     // console.log(socket.adapter.rooms);
