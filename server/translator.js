@@ -1,5 +1,8 @@
 var msTranslator = require('mstranslator');
-var config = require('./config.js') || {};
+var config = {};
+if (!process.env.CLIENT_ID){
+  config = require('./config.js');
+}
 var async = require('async');
 
 
