@@ -30,6 +30,9 @@ bower_components
 public/lib
 .idea
 
+# config files
+server/config.js
+
 # Floobits
 .floo
 .flooignore
