@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Room = mongoose.Schema({
   room: String,
-  lang:[],
+  lang:{},
   connections: {type: Number, default: 0} 
 });
 

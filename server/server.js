@@ -34,13 +34,15 @@ io.on('connection', function(socket){
         console.log(err, ' error finding room!');
       }
       if (room === null){
+        var lang = {};
+        lang[msg.lang] = 1;
         room = new Rooms({
           room: msg.room,
-          lang: [msg.lang]
+          lang: {msg.lang}
         })
       }
-      if(room.lang.indexOf(msg.lang) === -1){
-        room.lang.push(msg.lang);
+      if(!room.lang[msg.lang]){
+        room.lang[msg.lang] = 1;
       }
       room.save(function(err, room){
         console.log(room.lang.length);
@@ -62,9 +64,30 @@ io.on('connection', function(socket){
     // console.log(socket.adapter.rooms);
   });
 
-  socket.on('join room', function(room){
+  socket.on('join room', function(new_room, client_language){
+    socket.join(new_room);
+    // Find room in db
+    Rooms.findOne({room: room}, function(err, room){
+      if(err){
+        console.log(err, 'error finding room!');
+      }
+      // this creates room if it doesn't exist,
+      // stores languages as lang obj, property = language code
+      // value = # of users connected that langauge
+      if(room === null){
+        var lang = {};
+        lang[msg.lang] = 1;
+        room = new Rooms({
+          room: msg.room,
+          lang: lang
+        }) 
+      } else {
+        // If language exists in room, add 1 to user counter, else initiate to 1
+        room.lang[msg.lang] = (room.lang[msg.lang]) ? room.lang[msg.lang] + 1 : 1;
+      }
+      room.save();
+    });
     // console.log(socket.adapter.rooms);
-    socket.join(room);
     // console.log('enter room ->', room);
     // console.log(socket.adapter.rooms);
   });
