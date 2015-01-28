@@ -47,7 +47,7 @@ io.on('connection', function(socket){
     // console.log(socket.adapter.rooms);
   });
 
-  socket.on('change room', function(data){
+  socket.on('change language', function(data){
 
   });
 
