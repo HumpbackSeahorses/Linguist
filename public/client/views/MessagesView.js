@@ -22,6 +22,8 @@ var MessagesView = Backbone.View.extend({
     //socket.io listener for emits
     socket.on('chat message', function(msg){
       //adds message to collection
+      var userLang = $('#lang').val();
+      msg.text = msg.translations[userLang];
       collection.addmsg(msg);
     });
 
