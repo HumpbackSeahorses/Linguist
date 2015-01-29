@@ -1,7 +1,6 @@
 var port = process.env.PORT || 3000;
 var express = require("express");
 var app = express();
-
 var http = require("http").Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
@@ -15,12 +14,11 @@ var chatter = require('./server/ChatHandler.js');
 io.on('connection', function(socket){
   //automatically connect new users to lobby
   socket.join('lobby');
-  //join lobby in db, default to en for now
+  //join lobby in db, default to english for now
   chatter.joinRoom('lobby', 'en');
 
-  //naive solution, custom variables to store last room
-  //and user language. used for leaving rooms on disconnect
-  //if users are implemented these should probably be in that model
+  // naive solution, custom variables to store last room and user language. 
+  // They are used in socket.on 'join room' and 'change language' below.
   socket.currentRoom = 'lobby';
   socket.userLang = 'en';
 
@@ -40,25 +38,22 @@ io.on('connection', function(socket){
     });
   });
 
-  // socket.on('leave room', function(data){
-  //   // console.log(socket.adapter.rooms);
-  //   socket.leave(data.leaveRoom);
-  //   //leave room
-  //   chatter.leaveRoom(data.leaveRoom, data.lang);
-  // });
-
   socket.on('join room', function(data){
+    //leave room and update rooms database
     socket.leave(socket.currentRoom);
-    // leaveroom is broken, appends undefined :NAN to room.lang
     chatter.leaveRoom(socket.currentRoom, data.lang);
 
+    //update currentRoom, used by chatter.leaveRoom
     socket.currentRoom = data.room;
 
+    //join new room and update rooms database
     socket.join(data.room);
     chatter.joinRoom(data.room, data.lang);
-    // console.log(socket.adapter.rooms);
-    // console.log('enter room ->', room);
-    // console.log(socket.adapter.rooms);
+  });
+
+  socket.on('change language', function(newLang){
+    chatter.changeLanguage(socket.userLang, newLang, socket.currentRoom);
+    socket.userLang = newLang;
   });
 
 });
