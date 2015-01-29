@@ -1,12 +1,10 @@
 var msTranslator = require('mstranslator');
+var async = require('async');
 var config = {};
 
 if (!process.env.CLIENT_ID){
   config = require('./config.js');
 }
-
-var async = require('async');
-
 
 var Translator = function(){};
 
@@ -20,7 +18,6 @@ Translator.prototype.translate = function(msg, room, callback){
       tasks[key] = this.makeTranslateQuery(msg.text, msg.lang, key);
     }
   }
-  console.log('tasks: ', tasks);
   async.parallel(tasks, function(err, results){
     callback(err, results);
   })
