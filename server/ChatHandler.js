@@ -70,5 +70,16 @@ ChatHandler.prototype.leaveRoom = function(leaveRoom, lang){
   });
 };
 
+ChatHandler.prototype.changeLanguage = function(oldLang, newLang, currentRoom){
+  Rooms.findOne({room: currentRoom}, function(err, room){
+    if(err){
+      console.log('error finding room for changing language');
+    }
+    room.lang[oldLang]--;
+    room.lang[newLang] = (room.lang[newLang] > 0) ? room.lang[newLang] + 1 : 1;
+    room.markModified('lang');
+    room.save();
+  });
+};
 
 module.exports = new ChatHandler();

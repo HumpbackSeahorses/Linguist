@@ -40,25 +40,19 @@ io.on('connection', function(socket){
     });
   });
 
-  // socket.on('leave room', function(data){
-  //   // console.log(socket.adapter.rooms);
-  //   socket.leave(data.leaveRoom);
-  //   //leave room
-  //   chatter.leaveRoom(data.leaveRoom, data.lang);
-  // });
-
   socket.on('join room', function(data){
     socket.leave(socket.currentRoom);
-    // leaveroom is broken, appends undefined :NAN to room.lang
     chatter.leaveRoom(socket.currentRoom, data.lang);
 
     socket.currentRoom = data.room;
 
     socket.join(data.room);
     chatter.joinRoom(data.room, data.lang);
-    // console.log(socket.adapter.rooms);
-    // console.log('enter room ->', room);
-    // console.log(socket.adapter.rooms);
+  });
+
+  socket.on('change language', function(newLang){
+    chatter.changeLanguage(socket.userLang, newLang, socket.currentRoom);
+    socket.userLang = newLang;
   });
 
 });
