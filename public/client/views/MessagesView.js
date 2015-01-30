@@ -41,6 +41,7 @@ var MessagesView = Backbone.View.extend({
       var messageView = new MessageView ({model : message});
       this.$el.append (messageView.render());
       this.onscreenMessages[message.cid] = true;
+      $('#messagesView').scrollTop(2000);
     }
   }
 
