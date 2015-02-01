@@ -6,6 +6,7 @@ var source = require('vinyl-source-stream');
 var nodemon = require('gulp-nodemon');
 var watch = require('gulp-watch');
 var rename = require('gulp-rename');
+var karma = require('gulp-karma');
 
 var publicDir = 'public/**/*.js';
 
@@ -39,3 +40,19 @@ gulp.task('develop', function(){
 });
 
 gulp.task('default', ['develop']);
+
+var testFiles = ['./test/unit/*.js',
+  './test/integration/*.js'];
+
+gulp.task('test', function() {
+
+  return gulp.src(testFiles)
+    .pipe(karma({
+      configFile: 'karma.conf.js',
+      reporters: ['progress', 'coverage'],
+      action: 'run'
+    }))
+    .on('error', function(err) {
+      throw err;
+    });
+});
