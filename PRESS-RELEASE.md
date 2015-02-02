@@ -16,36 +16,25 @@ Oh, and I also like to write press-releases in what I call "Oprah-speak" for mai
 Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
  -->
  
-## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
-
-## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
-  people desiring to communicate with other people who speak different languages
-  -break language barriers
-  -learn new language
+## Linguist ##
+  >A chat client for cross-cultural communication.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
-  Our app speaks for you, in a language you don't.
+  >Linguist is a chat client that knows many languages. It smartly translates messages, letting you talk to people from around the world. Our app speaks for you, in a language you don't.
 
 ## Problem ##
-  > Describe the problem your product solves.
-  People don't speak the same language and we have the technology to change this. This app helps break those language barriers and allow for communication.
+  >People around the world do not speak the same language, hampering our ability to communicate and connect.
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
-  Elegant b/c i'ts eloquent. You can use our slick ui to efficiently communicate from phone/computer/tablet. Anytime. Anywhere. 
+  >Linguist is elegant because it's eloquent. It translates messages for you in real time, allowing you to speak to and understand people from around the world. It knows 30 languages, and utilizes the [Microsoft Translator Api](http://www.microsoft.com/translator/) to accurately translate chat messages. Linguist also cares about your privacy. No messages are saved on our servers, ever.
   
+## Quotes from the Team ##
+  > Finally I can talk with the people I couldn't talk to before! - Dave
+  > This opens doors for more pen pals! Yay! - Jared
 
-## Quote from You ##
-  > A quote from a spokesperson in your company.
+## Satisfied Customer ##
+  > Oh boy the Linguist app has changed my life - Tyler
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > Go to http://linguist.azurewebsites.net/ to use Linguist.
 
-## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
-
-## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.

@@ -7,6 +7,7 @@ var nodemon = require('gulp-nodemon');
 var watch = require('gulp-watch');
 var rename = require('gulp-rename');
 var karma = require('gulp-karma');
+var mocha = require('gulp-mocha');
 
 var publicDir = 'public/**/*.js';
 
@@ -41,10 +42,21 @@ gulp.task('develop', function(){
 
 gulp.task('default', ['develop']);
 
+gulp.task('test-server', function(){
+  return gulp.src('./test/unit/temp.js', {read: false})
+    .pipe(mocha({reporter: 'nyan'}));
+    //.once('error', function () {
+    //  process.exit(1);
+    //})
+    //.once('end', function () {
+    //  process.exit();
+    //});
+});
+
 var testFiles = ['./test/unit/*.js',
   './test/integration/*.js'];
 
-gulp.task('test', function() {
+gulp.task('test-client', function() {
 
   return gulp.src(testFiles)
     .pipe(karma({
