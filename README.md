@@ -18,10 +18,11 @@
 > You can try linguist out here: http://linguist.azurewebsites.net.
 
 From the home page:
+
 1. Select your language from the sidebar
-1. Create a username
-1. Select the room you want to chat in. If no room is selected, default is lobby
-1. Start chatting!
+2. Create a username
+3. Select the room you want to chat in. If no room is selected, default is lobby
+4. Start chatting!
 
 ## Requirements
 
