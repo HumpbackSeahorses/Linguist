@@ -4,6 +4,7 @@ var app = express();
 var http = require("http").Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
+var db = require('./db/db.js');
 
 var indexPage = path.resolve(__dirname + '/public');
 
@@ -13,6 +14,7 @@ var chatter = require('./server/ChatHandler.js');
 
 io.on('connection', function(socket){
   //automatically connect new users to lobby
+  // console.log('user connected');
   socket.join('lobby');
   //join lobby in db, default to english for now
   chatter.joinRoom('lobby', 'en');
@@ -23,7 +25,7 @@ io.on('connection', function(socket){
   socket.userLang = 'en';
 
   socket.on('disconnect', function(){
-    //console.log('user disconnected');
+    // console.log('user disconnected');
     console.log(socket.currentRoom, socket.userLang);
     chatter.leaveRoom(socket.currentRoom, socket.userLang);
   });

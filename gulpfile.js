@@ -1,8 +1,6 @@
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
-var browserify = require('browserify');
 var concat = require('gulp-concat');
-var source = require('vinyl-source-stream');
 var nodemon = require('gulp-nodemon');
 var watch = require('gulp-watch');
 var rename = require('gulp-rename');
@@ -43,18 +41,12 @@ gulp.task('develop', function(){
 gulp.task('default', ['develop']);
 
 gulp.task('test-server', function(){
-  return gulp.src('./test/unit/temp.js', {read: false})
+  return gulp.src(['./test/server/server.js','./test/server/integration.js' ], {read: false})
     .pipe(mocha({reporter: 'nyan'}));
-    //.once('error', function () {
-    //  process.exit(1);
-    //})
-    //.once('end', function () {
-    //  process.exit();
-    //});
 });
 
-var testFiles = ['./test/unit/*.js',
-  './test/integration/*.js'];
+var testFiles = ['./test/client/unit.js',
+  './test/client/integration.js'];
 
 gulp.task('test-client', function() {
 

@@ -3,13 +3,13 @@ module.exports = function(config) {
     // base path, that will be used to resolve files and exclude
     basePath: './',
 
-    frameworks: ['mocha', 'chai', 'sinon'
-],
+    frameworks: ['mocha','chai','sinon'
+    ],
 
     // list of files / patterns to load in the browser
     files: require('./include.conf.js').concat([
-      'test/unit/**/*.js',
-      'test/integration/**/*.js'
+      'test/client/unit.js',
+      'test/client/integration.js'
     ]),
 
     // list of files to exclude

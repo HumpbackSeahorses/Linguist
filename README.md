@@ -15,7 +15,7 @@
 
 ## Usage
 
-> You can try linguist out here: http://linguist.azurewebsites.net
+> You can try linguist out here: http://linguist.azurewebsites.net.
 
 From the home page:
 1. Select your language from the sidebar
@@ -63,7 +63,7 @@ gulp develop - Builds scripts, runs tests, serves site on local server, and watc
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+View the project roadmap [here](https://github.com/HumpbackSeahorses/HumpbackSeahorses/issues)
 
 ## Team
   - __Product Owner__: Jared Noble

@@ -7,11 +7,18 @@
 <html>
   <head>
     <title>Linguist</title>
+    <meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1">
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->  
     <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+    <noscript>
+      <link rel="stylesheet" href="css/skel.css" />
+      <link rel="stylesheet" href="css/style.css" />
+      <link rel="stylesheet" href="css/style-desktop.css" />
+      <link rel="stylesheet" href="css/style-wide.css" />
+    </noscript>
   </head>
   <!--
     Note: Set the body element's class to "left-sidebar" to position the sidebar on the left.
@@ -24,23 +31,28 @@
 
         <!-- Content -->
           <div id="content">
-            <div class="container" id="messagesView"
-                style="position:absolute;height:60%;width:80%;border:1px solid #ccc;overflow-y:auto;">
-            </div>
-            <div>
-              <form action="" style="position:fixed; top: 80%; right: 10%;width:68%;">
-                <input id="chatInput" placeholder='message' autocomplete="off" style="width: 90%"/>
-                <button type="submit" style="width:7%;">Send</button>
-              </form>
+            <div class="inner">
+              <article class="box post post-excerpt">
+                <div class="inner" id="messagesView"
+                  style="border:1px solid #ccc;overflow-y:auto;">
+                </div>
+                <div>
+                  <form action="" id="submitForm">
+                    <input id="chatInput" placeholder='message' autocomplete="off"
+                      style="width: 90%;border: 1px solid #ccc;"/>
+                    <button type="submit" id="submitButton">Send </button>
+                  </form>
+                </div>
+              <article>
             </div>
           </div>
 
         <!-- Sidebar -->
           <div id="sidebar">
-          
+
             <!-- Logo -->
               <h1 id="logo"><a href="#">LINGUIST</a></h1>
-          
+
             <!-- Nav -->
               <nav id="nav">
                 <ul>
@@ -111,10 +123,10 @@
                   <button type='submit' id="roomButton">change room</button>
                 </form>
               </section>
-          
+
             <!-- Text -->
               <section class="box text-style1">
-                <div class="inner">
+                <div class="inner" id="linguistBox">
                   <p>
                     <strong>Linguist:</strong> Our app speaks for you, in a language you don't.
                   </p>
@@ -124,8 +136,8 @@
           </div>
 
       </div>
-      
-    <script src="/dist/scripts.min.js"></script>    
+
+    <script src="/dist/scripts.min.js"></script>
     <script src="/lib/skel.min.js"></script>
     <script src="/lib/skel-layers.min.js"></script>
     <script src="/lib/init.js"></script>

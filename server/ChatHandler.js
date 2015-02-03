@@ -1,4 +1,3 @@
-var db = require('../db/db.js');
 var Rooms = require('../db/models/Room.js');
 var translator = require('./translator.js');
 
@@ -16,6 +15,7 @@ ChatHandler.prototype.prepareMessage = function(msg, callback){
     translator.translate(msg, room, function(err, results){
       if(err){
         console.log('error translating: ', err);
+        callback(err);
       }
       msg.translations = results;
       callback(msg);
@@ -25,7 +25,7 @@ ChatHandler.prototype.prepareMessage = function(msg, callback){
 
 // This accepts strings as arguments, will create or join joinRoom 
 // and increment language counter
-ChatHandler.prototype.joinRoom = function(joinRoom, lang){
+ChatHandler.prototype.joinRoom = function(joinRoom, lang, callback){
   Rooms.findOne({room: joinRoom}, function(err, room){
     if(err){
       console.log(err, 'error finding room to join!');
@@ -47,12 +47,15 @@ ChatHandler.prototype.joinRoom = function(joinRoom, lang){
       room.connections++;
     }
     room.save();
+    if(callback){
+      callback(room);
+    }
   });
 };
 
 // This accepts strings as arguments, will leave leaveRoom 
 // and decrement language counter. 
-ChatHandler.prototype.leaveRoom = function(leaveRoom, lang){
+ChatHandler.prototype.leaveRoom = function(leaveRoom, lang, callback){
   Rooms.findOne({room: leaveRoom}, function(err, room){
     if(err){
       console.log('FATAL: error finding room to leave!');
@@ -67,6 +70,9 @@ ChatHandler.prototype.leaveRoom = function(leaveRoom, lang){
       room.lang[lang]--;
       room.markModified('lang');
       room.save();
+    }
+    if(callback){
+      callback(room);
     }
   });
 };
