@@ -18,8 +18,6 @@ var SubmitView = Backbone.View.extend({
       room: $('#room').val()
     };
     socket.emit('chat message', message);
-    //remove for production
-    // console.log('Submitting message ->', message);
     $('#chatInput').val('');
   },
 

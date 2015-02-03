@@ -1,11 +1,11 @@
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
-var browserify = require('browserify');
 var concat = require('gulp-concat');
-var source = require('vinyl-source-stream');
 var nodemon = require('gulp-nodemon');
 var watch = require('gulp-watch');
 var rename = require('gulp-rename');
+var karma = require('gulp-karma');
+var mocha = require('gulp-mocha');
 
 var publicDir = 'public/**/*.js';
 
@@ -39,3 +39,24 @@ gulp.task('develop', function(){
 });
 
 gulp.task('default', ['develop']);
+
+gulp.task('test-server', function(){
+  return gulp.src(['./test/server/server.js','./test/server/integration.js' ], {read: false})
+    .pipe(mocha({reporter: 'nyan'}));
+});
+
+var testFiles = ['./test/client/unit.js',
+  './test/client/integration.js'];
+
+gulp.task('test-client', function() {
+
+  return gulp.src(testFiles)
+    .pipe(karma({
+      configFile: 'karma.conf.js',
+      reporters: ['progress', 'coverage'],
+      action: 'run'
+    }))
+    .on('error', function(err) {
+      throw err;
+    });
+});

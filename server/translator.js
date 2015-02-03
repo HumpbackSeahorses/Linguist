@@ -1,8 +1,4 @@
 var msTranslator = require('mstranslator');
-var config = {};
-if (!process.env.CLIENT_ID){
-  config = require('./config.js');
-}
 var async = require('async');
 var config = {};
 
@@ -24,7 +20,7 @@ Translator.prototype.translate = function(msg, room, callback){
   }
   async.parallel(tasks, function(err, results){
     callback(err, results);
-  })
+  });
 };
 
 // this returns a function ready to be called with parameters set to
@@ -41,12 +37,7 @@ Translator.prototype.makeTranslateQuery = function(text, fromLang, toLang){
       client_secret: process.env.CLIENT_SECRET || config.client_secret
     }, true);
     client.translate (params, function (err , data) {
-      if(err){
-        console.log(err)
-      }
-      else{
-        callback (err, data);
-      }
+      callback (err, data);
     });
   };
 };

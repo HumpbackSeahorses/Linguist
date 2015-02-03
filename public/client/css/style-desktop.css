@@ -217,16 +217,31 @@
 		text-align: center;
 	}
 
-		#copyright p
-		{
-			font-size: 0.8em;
-			line-height: 2em;
-		}
-	
-		#copyright:before
-		{
-			height: 0.5em;
-			margin: 0 0 2em 0;
-		}
-		
-		
+	#copyright p
+	{
+		font-size: 0.8em;
+		line-height: 2em;
+	}
+
+	#copyright:before
+	{
+		height: 0.5em;
+		margin: 0 0 2em 0;
+	}
+
+	#messagesView {
+		max-height: 650px;
+		min-height: 650px
+	}
+
+	#submitForm{
+		position:fixed;
+		top: 90%;
+		right: 25%;
+		width: 500px;
+		margin: 0 auto;
+	}
+
+	#submitButton{
+		width:25%;
+	}

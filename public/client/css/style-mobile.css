@@ -90,12 +90,12 @@
 					{
 						display: inline;
 					}
-					
+
 						.box.post .info .date .year
 						{
 							display: none;
 						}
-						
+
 						.box.post .info .date .month span
 						{
 							display: none;
@@ -156,7 +156,7 @@
 		{
 			display: none !important;
 		}
-		
+
 		#nav li:hover a
 		{
 			background: none;
@@ -165,7 +165,7 @@
 /*********************************************************************************/
 /* Content                                                                       */
 /*********************************************************************************/
-		
+
 	#content
 	{
 		margin-top: 44px;
@@ -181,7 +181,7 @@
 		padding: 20px 12px 20px 10px;
 		box-shadow: inset -1px 0 0 0 rgba(255,255,255,0.15), inset -0.1em 0 0.5em 0 rgba(0,0,0,0.25);
 	}
-	
+
 /*********************************************************************************/
 /* Copyright                                                                     */
 /*********************************************************************************/
@@ -197,10 +197,33 @@
 			font-size: 0.9em;
 			line-height: 2em;
 		}
-	
+
 		#copyright:before
 		{
 			height: 0.5em;
 			margin: 0 0 2em 0;
 		}
-		
+
+	.inner {
+		height: 450px;
+	}
+
+	#messagesView {
+		height:380px;
+	}
+
+	#submitForm{
+		position:fixed;
+		top: 85%;
+		right: 25%;
+		width:50%;
+		margin: 0 auto;
+	}
+
+	#submitButton{
+			width:50%;
+		}
+
+	#linguistBox{
+		height: 100px;
+	}
