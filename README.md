@@ -47,19 +47,23 @@ bower install
 
 3. Create a config.js file in /server/ with the following contents:
 
-  >var config = {};
+  ```sh
+  var config = {};
   config.client_id = "FILL ME IN";
   config.client_secret = "FILL ME IN";
   config.localDevPath = 'mongodb://localhost:27017/linguist';
   module.exports = config;
+  ```
 
 ### Tasks
 
-gulp - Runs tests, builds public scripts, and serves site on local server port 3000
+gulp - Runs tests, builds public scripts, and serves site on local server port 3000, and watches for changes to files (server and public).
 
 gulp scripts - Builds public scripts for deployment, placing result in /public/dist
 
-gulp develop - Builds scripts, runs tests, serves site on local server, and watches for changes to files (server and public).
+gulp test-server - Server Test
+
+gulp test-client - Client Test
 
 ### Roadmap
 
