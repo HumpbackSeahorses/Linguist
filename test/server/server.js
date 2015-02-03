@@ -37,6 +37,39 @@ describe('server', function() {
   });
 });
 
+
+
+describe('translator.js', function(){
+
+
+  it('makeTranslateQuery should return a function', function(){
+    var text = 'hello world';
+    var fromLang = 'en';
+    var toLang = 'es';
+    var fn = Translator.makeTranslateQuery(text, fromLang, toLang);
+
+    expect(fn).to.be.a('function');
+
+  });
+
+  it('makeTranslateQuery should receive back correct translation', function(done){
+    var text = 'hello world';
+    var fromLang = 'en';
+    var toLang = 'es';
+    var fn = Translator.makeTranslateQuery(text, fromLang, toLang);
+
+  // console.log(fn);
+    function getData(err, data){
+      expect(data).to.equal("Hola mundo");
+      done();
+    }
+     var resultData = fn(getData);
+
+  });
+
+});
+
+
 // These tests are broken. Issues with mongoose connection.
 // When they are run the tests all pass but they may be false positives.
 
@@ -89,34 +122,3 @@ describe('server', function() {
 //     });
 //   });
 // });
-
-
-describe('translator.js', function(){
-
-
-  it('makeTranslateQuery should return a function', function(){
-    var text = 'hello world';
-    var fromLang = 'en';
-    var toLang = 'es';
-    var fn = Translator.makeTranslateQuery(text, fromLang, toLang);
-
-    expect(fn).to.be.a('function');
-
-  });
-
-  it('makeTranslateQuery should receive back correct translation', function(done){
-    var text = 'hello world';
-    var fromLang = 'en';
-    var toLang = 'es';
-    var fn = Translator.makeTranslateQuery(text, fromLang, toLang);
-
-  // console.log(fn);
-    function getData(err, data){
-      expect(data).to.equal("Hola mundo");
-      done();
-    }
-     var resultData = fn(getData);
-
-  });
-
-});
